@@ -11,13 +11,16 @@ from ...group import COURIER
 DAILY_REPORT = COURIER.handler("daily_report", "Ежедневный отчет")
 
 
-class DailyReportInternal(InternalBase, DateTimeMixin):
+class DailyReportInternalBase(InternalBase, DateTimeMixin):
     key: ClassVar[str] = DAILY_REPORT.get_full_name("data")
 
-    user_id: Optional[str] = Field(None, exclude=True)  # Only used for path
-    path: Optional[DirectoryPath] = None
-    data: dict[str, Any] = {}
     closed: bool = False
+
+
+class DailyReportInternal(DailyReportInternalBase):
+    user_id: Optional[str] = Field(None, exclude=True)  # Only used for path
+    path: Optional[Path] = None
+    data: dict[str, Any] = {}
 
     @validator("path", always=True)
     def validate_path(cls, v, values: dict):
@@ -26,9 +29,9 @@ class DailyReportInternal(InternalBase, DateTimeMixin):
                 raise ValueError("user_id requiered if no path")
             v = Path(
                 config.TMP_FOLDER,
+                values["user_id"],
                 DAILY_REPORT.get_full_name(),
                 values["dt"].strftime("%Y/%m/%d"),
-                values["user_id"],
             )
         Path(v).mkdir(parents=True, exist_ok=True)
         return v
