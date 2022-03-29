@@ -52,7 +52,7 @@ class MRInternalBase(InternalBase, DateTimeMixin):
 
 class MRInternal(MRInternalBase, CurrentMessageMixin):
     user_id: Optional[str] = Field(None, exclude=True)  # Only used for path
-    path: DirectoryPath = None
+    path: Path = None
     services: list[Service] = []
 
     # TODO move in own class
