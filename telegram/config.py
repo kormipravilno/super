@@ -7,9 +7,10 @@ from common.config import BaseConfig
 
 
 class Config(BaseConfig):
-    REDIS_URL: RedisDsn
+    REDISTOGO_URL: RedisDsn
     TELEGRAM: str
     TIMEZONE: tzinfo
+    SPREADSHEET: str
     TMP_FOLDER: DirectoryPath = None
 
     @validator("TIMEZONE", pre=True)

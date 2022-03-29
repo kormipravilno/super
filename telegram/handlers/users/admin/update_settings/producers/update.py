@@ -3,13 +3,14 @@ from db.spreadsheet_schema import SPREADSHEET_SCHEMA
 
 from common.mq.engine import rpc
 
+from telegram.loader import config
+
 
 async def update():
     await purge()
 
     settings_data = await rpc.call(
-        "google.sheets.process.get",
-        dict(id="1o3-oHoGKuGjCrFtEuDmNI2RnNa9nMI8e1AZ8jiI_dP8"),
+        "google.sheets.process.get", dict(id=config.SPREADSHEET)
     )
     settings = await rpc.call(
         "google.sheets.parse.spreadsheet", dict(data=settings_data)
