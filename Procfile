@@ -1,2 +1,1 @@
-telegram: python -m telegram.main
-google: python -m google.main
+app: python -m telegram.main & python -m google.main & wait -n
