@@ -11,6 +11,8 @@ config = Config()
 bot = Bot(config.TELEGRAM, parse_mode="HTML")
 
 storage = RedisStorage3(
-    config.REDIS_URL.host, config.REDIS_URL.port, password=config.REDIS_URL.password
+    config.REDISTOGO_URL.host,
+    config.REDISTOGO_URL.port,
+    password=config.REDISTOGO_URL.password,
 )
 dp = Dispatcher(bot, storage=storage)
