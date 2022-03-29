@@ -40,7 +40,9 @@ async def proceed_has_state_start_cmd(message: Message, state: FSMContext):
     await message.answer("Прогресс обнулен", reply_markup=ReplyKeyboardRemove())
 
     await state.reset_state(with_data=False)
-    shutil.rmtree(Path(config.TMP_FOLDER, str(message.from_user.id)))
+    path = Path(config.TMP_FOLDER, str(message.from_user.id))
+    if path.exists():
+        shutil.rmtree(path)
 
     await start_cmd(message)
 

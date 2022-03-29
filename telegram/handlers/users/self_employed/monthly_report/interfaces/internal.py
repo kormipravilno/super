@@ -80,10 +80,12 @@ class MRInternal(MRInternalBase, CurrentMessageMixin):
     def delete_service(self, service: Service):
         self.services.remove(service)
         if isinstance(service.value, Path):
-            shutil.rmtree(service.value)
+            if service.value.exists():
+                shutil.rmtree(service.value)
 
     def cleanup(self):
-        shutil.rmtree(self.path)
+        if self.path.exists():
+            shutil.rmtree(self.path)
 
     def to_uploaded(self, folder_id: str) -> "MRUploadedInternal":
         return MRUploadedInternal(dt=self.dt, path=self.path, folder_id=folder_id)
