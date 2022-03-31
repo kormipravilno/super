@@ -10,7 +10,7 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
-      - ./.data/postgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
 
   redis:
     image: redis
@@ -19,7 +19,7 @@ services:
     ports:
       - "${REDIS_PORT}:6379"
     volumes:
-      - ./.data/redis:/data
+      - redis:/data
 
   nocodb:
     image: nocodb/nocodb:latest
@@ -29,3 +29,7 @@ services:
       NC_DB: "pg://postgres:${POSTGRES_PORT}?u=${POSTGRES_USER}&p=${POSTGRES_PASSWORD}&d=nocodb"
     ports:
       - "${NOCODB_PORT}:8080"
+
+volumes:
+  postgres:
+  redis:
