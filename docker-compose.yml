@@ -24,7 +24,7 @@ services:
   nocodb:
     image: nocodb/nocodb:latest
     depends_on:
-      - db
+      - postgres
     environment:
       NC_DB: "pg://postgres:${POSTGRES_PORT}?u=${POSTGRES_USER}&p=${POSTGRES_PASSWORD}&d=nocodb"
     ports:
