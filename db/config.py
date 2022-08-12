@@ -1,9 +1,9 @@
-from pydantic import BaseSettings, PostgresDsn, AmqpDsn
+from common.config import BaseConfig
+from pydantic import PostgresDsn
 
 
-class Config(BaseSettings):
+class Config(BaseConfig):
     DATABASE_URL: PostgresDsn
-    CLOUDAMQP_URL: AmqpDsn
 
     class Config:
         env_file = ".env"

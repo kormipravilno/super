@@ -1,8 +1,8 @@
-from pydantic import BaseSettings, AmqpDsn
+from pydantic import AmqpDsn, BaseSettings
 
 
 class BaseConfig(BaseSettings):
-    CLOUDAMQP_URL: AmqpDsn
+    AMQP_URL: AmqpDsn
 
     class Config:
         env_file = "././.env"

@@ -1,13 +1,14 @@
-from pydantic import DirectoryPath, RedisDsn, validator
 from datetime import tzinfo
-from pytz import timezone
 from pathlib import Path
 
 from common.config import BaseConfig
+from pydantic import DirectoryPath, RedisDsn, validator
+from pytz import timezone
 
 
 class Config(BaseConfig):
-    REDISTOGO_URL: RedisDsn
+    DB_UPDATE_PASSWORD: str
+    REDIS_URL: RedisDsn
     TELEGRAM: str
     TIMEZONE: tzinfo
     SPREADSHEET: str

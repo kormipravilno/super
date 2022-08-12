@@ -1,6 +1,7 @@
 from logging import getLogger
 
 from common.logging import configure_logging
+
 from google.config import config
 
 configure_logging()
@@ -8,11 +9,12 @@ logger = getLogger(__name__)
 
 
 if __name__ == "__main__":
-    from google.loader import loop
-    import google.consumer
-    from common.mq import init_mq, close_mq
+    from common.mq import close_mq, init_mq
 
-    loop.run_until_complete(init_mq(config.CLOUDAMQP_URL))
+    import google.consumer
+    from google.loader import loop
+
+    loop.run_until_complete(init_mq(config.AMQP_URL))
 
     try:
         logger.info("Consuming now.")
