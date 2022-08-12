@@ -2,21 +2,23 @@ import asyncio
 from logging import getLogger
 
 from common.logging import configure_logging
+
 from db.config import config
 
 configure_logging()
 logger = getLogger(__name__)
 
 
-from common.mq import init_mq, close_mq
-from db.engine import init_db, close_db
+from common.mq import close_mq, init_mq
+
+from db.engine import close_db, init_db
 
 
 async def init():
     import db.consumer
 
     await init_db()
-    await init_mq(config.CLOUDAMQP_URL)
+    await init_mq(config.AMQP_URL)
 
 
 async def close():

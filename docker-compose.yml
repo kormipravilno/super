@@ -21,15 +21,33 @@ services:
     volumes:
       - redis:/data
 
-  nocodb:
-    image: nocodb/nocodb:latest
+  rabbitmq:
+    image: rabbitmq:3.7
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+
+  app:
+    build: .
     depends_on:
       - postgres
+      - redis
+      - rabbitmq
+    restart: always
     environment:
-      NC_DB: "pg://postgres:${POSTGRES_PORT}?u=${POSTGRES_USER}&p=${POSTGRES_PASSWORD}&d=nocodb"
-    ports:
-      - "${NOCODB_PORT}:8080"
+      AMQP_URL: amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@rabbitmq
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis
+    volumes:
+      - app_tmp:/app/tmp
 
 volumes:
   postgres:
   redis:
+  rabbitmq:
+  app_tmp:
