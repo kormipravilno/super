@@ -43,6 +43,11 @@ services:
       AMQP_URL: amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@rabbitmq
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis
+      TELEGRAM:
+      GOOGLE:
+      SPREADSHEET:
+      TIMEZONE:
+      DB_UPDATE_PASSWORD:
     volumes:
       - app_tmp:/app/tmp
 
